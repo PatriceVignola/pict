@@ -9,7 +9,7 @@ using namespace std;
 
 #include "cmdline.h"
 #include "gcd.h"
-using namespace pictcli_gcd;
+using namespace pict_gcd;
 
 //
 //

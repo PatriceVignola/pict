@@ -6,7 +6,7 @@
 #include "cparser.h"
 using namespace std;
 
-namespace pictcli_constraints
+namespace pict_constraints
 {
 
 //

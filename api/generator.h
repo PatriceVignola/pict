@@ -684,7 +684,7 @@ public:
 
     void SetAbortCallback( AbortCallbackFunc func ) { m_abortCallback = func; }
     
-    bool AddExclusion( Exclusion& excl )
+    bool AddExclusion( const Exclusion& excl )
     {
         std::pair<ExclusionCollection::iterator, bool> ret = m_exclusions.insert( excl );
         return( ret.second );

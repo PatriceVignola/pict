@@ -1,6 +1,6 @@
 #include "ccommon.h"
 
-namespace pictcli_constraints
+namespace pict_constraints
 {
 
 class ConstraintsTokenizer

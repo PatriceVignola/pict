@@ -9,6 +9,7 @@
 /cli/Release
 /Debug
 /Release
+**/x64/*
 /bin
 /test/.stderr*
 /test/.stdout*

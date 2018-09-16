@@ -2,9 +2,9 @@
 #include "cparser.h"
 #include "gcdexcl.h"
 using namespace std;
-using namespace pictcli_constraints;
+using namespace pict_constraints;
 
-namespace pictcli_gcd
+namespace pict_gcd
 {
 
 //

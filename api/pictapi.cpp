@@ -3,6 +3,8 @@ using namespace std;
 
 #include "pictapi.h"
 #include "generator.h"
+#include "cmodel.h"
+#include "gcdexcl.h"
 using namespace pictcore;
 
 //
@@ -236,6 +238,59 @@ PictDeleteTask
 //
 PICT_HANDLE
 API_SPEC
+PictLoadModel
+(
+    IN const wchar_t* path
+)
+{
+    CModelData cModelData;
+    cModelData.ReadModel(std::wstring(path));
+    unsigned int order = 2;
+
+    // TODO: Add a seed parameter
+    Model* modelObj = new Model(L"", MixedOrder, 0, PICT_DEFAULT_RANDOM_SEED);
+
+    for (const CModelParameter& cParam : cModelData.Parameters)
+    {
+        Parameter* param = new Parameter(order,
+            static_cast<int>(modelObj->GetParameters().size() + 1),
+            static_cast<int>(cParam.Values.size()),
+            cParam.Name,
+            false);
+
+        vector<int> weights;
+        weights.reserve(cParam.Values.size());
+
+        for (const CModelValue& value : cParam.Values)
+        {
+            weights.push_back(value.GetWeight());
+        }
+
+        param->SetWeights(move(weights));
+        modelObj->AddParameter(param);
+    }
+
+    pict_gcd::ConstraintsInterpreter interpreter(cModelData, modelObj->GetParameters());
+
+    std::set<Exclusion> exclusions;
+    interpreter.ConvertToExclusions(exclusions);
+
+    Task* taskObj = new Task();
+    taskObj->SetRootModel(modelObj);
+
+    for (const Exclusion& exclusion : exclusions)
+    {
+        taskObj->AddExclusion(exclusion);
+    }
+
+    return(static_cast<PICT_HANDLE>(modelObj));
+};
+
+//
+//
+//
+PICT_HANDLE
+API_SPEC
 PictCreateModel
     (
     IN OPT unsigned int randomSeed
@@ -281,6 +336,7 @@ PictAddParameter
             std::vector<int> weights;
             weights.reserve( valueCount );
             weights.insert( weights.begin(), valueWeights, valueWeights + valueCount );
+            param->SetWeights(move(weights));
         }
     }
     catch( ... )
@@ -354,6 +410,8 @@ PictDeleteModel
     {
         delete( param );
     }
+
+    delete( modelObj->GetTask() );
 
     // and this model, Model::~Model will clean up all submodels too
     delete( modelObj );

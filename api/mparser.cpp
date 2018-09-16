@@ -1,6 +1,6 @@
 #include <fstream>
 #include <sstream>
-#include "model.h"
+#include "cmodel.h"
 using namespace std;
 
 const wchar_t COMMENT_CHAR    = L'#';

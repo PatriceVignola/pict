@@ -35,8 +35,8 @@ public:
     // round-robin through names
     std::wstring GetNextName();
 
-    bool IsPositive() { return( _positive ); }
-    unsigned int GetWeight() { return( _weight ); }
+    bool IsPositive() const { return( _positive ); }
+    unsigned int GetWeight() const { return( _weight ); }
 
 private:
     wstrings            _names;

@@ -5,7 +5,7 @@
 #include <assert.h>
 #include "strings.h"
 
-namespace pictcli_constraints
+namespace pict_constraints
 {
 
 //

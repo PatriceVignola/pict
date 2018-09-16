@@ -1,9 +1,9 @@
 #pragma once
 
 #include <sstream>
-#include "model.h"
+#include "cmodel.h"
 
-namespace pictcli_gcd
+namespace pict_gcd
 {
 
 

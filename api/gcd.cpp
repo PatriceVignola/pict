@@ -3,7 +3,7 @@ using namespace std;
 
 #define FAILED(err) (ErrorCode_Success != (err))
 
-namespace pictcli_gcd
+namespace pict_gcd
 {
 
 //

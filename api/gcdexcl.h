@@ -2,9 +2,9 @@
 
 #include "ccommon.h"
 #include "gcdmodel.h"
-namespace pcc = pictcli_constraints;
+namespace pcc = pict_constraints;
 
-namespace pictcli_gcd
+namespace pict_gcd
 {
 
 class ConstraintsInterpreter

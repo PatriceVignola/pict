@@ -1,5 +1,5 @@
 #include <sstream>
-#include "model.h"
+#include "cmodel.h"
 using namespace std;
 
 // ****************************************************************************

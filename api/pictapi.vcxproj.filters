@@ -23,6 +23,36 @@
     <ClCompile Include="parameter.cpp">
       <Filter>Core</Filter>
     </ClCompile>
+    <ClCompile Include="strings.cpp">
+      <Filter>Utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="cmodel.cpp">
+      <Filter>Parser</Filter>
+    </ClCompile>
+    <ClCompile Include="mparser.cpp">
+      <Filter>Parser</Filter>
+    </ClCompile>
+    <ClCompile Include="gcd.cpp">
+      <Filter>Runner</Filter>
+    </ClCompile>
+    <ClCompile Include="gcdexcl.cpp">
+      <Filter>Runner</Filter>
+    </ClCompile>
+    <ClCompile Include="gcdmodel.cpp">
+      <Filter>Runner</Filter>
+    </ClCompile>
+    <ClCompile Include="common.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="ccommon.cpp">
+      <Filter>Parser</Filter>
+    </ClCompile>
+    <ClCompile Include="cparser.cpp">
+      <Filter>Parser</Filter>
+    </ClCompile>
+    <ClCompile Include="ctokenizer.cpp">
+      <Filter>Parser</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pictapi.h" />
@@ -35,10 +65,46 @@
     <ClInclude Include="deriver.h">
       <Filter>Core</Filter>
     </ClInclude>
+    <ClInclude Include="strings.h">
+      <Filter>Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="cmodel.h">
+      <Filter>Parser</Filter>
+    </ClInclude>
+    <ClInclude Include="gcd.h">
+      <Filter>Runner</Filter>
+    </ClInclude>
+    <ClInclude Include="gcdexcl.h">
+      <Filter>Runner</Filter>
+    </ClInclude>
+    <ClInclude Include="gcdmodel.h">
+      <Filter>Runner</Filter>
+    </ClInclude>
+    <ClInclude Include="common.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="ccommon.h">
+      <Filter>Parser</Filter>
+    </ClInclude>
+    <ClInclude Include="cparser.h">
+      <Filter>Parser</Filter>
+    </ClInclude>
+    <ClInclude Include="ctokenizer.h">
+      <Filter>Parser</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Core">
       <UniqueIdentifier>{1c2248af-4aff-4405-a494-dca176b3d474}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Parser">
+      <UniqueIdentifier>{025bebaf-de65-4741-96e3-b780ee70e838}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Utilities">
+      <UniqueIdentifier>{e5c2636f-bc18-47a8-8ca7-7091a0b174d3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Runner">
+      <UniqueIdentifier>{b36eda1b-c76f-4370-8da7-3ea51296782b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

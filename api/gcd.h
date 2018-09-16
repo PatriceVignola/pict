@@ -1,8 +1,20 @@
 #pragma once
 
+#ifndef IN
+#define IN
+#endif
+
+#ifndef OUT
+#define OUT
+#endif
+
+#ifndef NOOP
+#define NOOP
+#endif
+
 #include "gcdmodel.h"
 
-namespace pictcli_gcd
+namespace pict_gcd
 {
 
 class GcdRunner

@@ -1,11 +1,10 @@
 #pragma once
 
-#include "cmdline.h"
 #include "gcdexcl.h"
 #include "gcdmodel.h"
 using namespace std;
 
-namespace pictcli_gcd
+namespace pict_gcd
 {
 
 //
@@ -420,27 +419,6 @@ bool CGcdData::fixModelAndSubmodelOrder()
     // If there's only one parameter or submodel in the model, the order of 2 will fail to execute
     // To aviod this, must switch to lower order behind the scenes
     size_t inputParamCount = _modelData.TotalParameterCount() - _modelData.ResultParameterCount();
-
-    if( _modelData.ProvidedArguments.find( SWITCH_ORDER ) == _modelData.ProvidedArguments.end() )
-    {
-        // if submidels were defined, don't need any params, otherwise order = params without submodels
-        if( _modelData.Submodels.size() > 0 )
-        {
-            if( _modelData.Order > static_cast<int>( rootModel->GetSubmodelCount() ) )
-            {
-                _modelData.Order = rootModel->GetSubmodelCount();
-            }
-        }
-        else
-        {
-            if( inputParamCount > 0 && _modelData.Order > static_cast<int>( inputParamCount ) )
-            {
-                _modelData.Order = static_cast<int>( inputParamCount );
-            }
-        }
-
-        rootModel->SetOrder( _modelData.Order );
-    }
 
     // now perform standard check on the order
     if( _modelData.Submodels.size() > 0 )

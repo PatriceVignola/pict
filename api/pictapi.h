@@ -291,6 +291,26 @@ PictDeleteTask
 
 // ////////////////////////////////////////////////////////////////////////////
 //
+// Loads a model from a model file. Models need to be deleted with DeleteModel
+// 
+// Parameters:
+//   path        Absolute path of the model
+//   
+// Returns:
+//   Non-NULL    Allocation succeeded (a handle is returned)
+//   NULL        Allocation failed
+//
+// ////////////////////////////////////////////////////////////////////////////
+
+PICT_HANDLE
+API_SPEC
+PictLoadModel
+(
+    IN const wchar_t* path
+);
+
+// ////////////////////////////////////////////////////////////////////////////
+//
 // Allocates a new model. Models need to be deleted with DeleteModel
 // 
 // Parameters:

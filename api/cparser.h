@@ -3,9 +3,9 @@
 #include <stack>
 #include <list>
 #include "ccommon.h"
-#include "model.h"
+#include "cmodel.h"
 
-namespace pictcli_constraints
+namespace pict_constraints
 {
 
 //
