@@ -328,15 +328,15 @@ PictAddParameter
     {
         if( NULL != param )
         {
+            if( NULL != valueWeights )
+            {
+                std::vector<int> weights;
+                weights.reserve( valueCount );
+                weights.insert( weights.begin(), valueWeights, valueWeights + valueCount );
+                param->SetWeights(move(weights));
+            }
+
             modelObj->AddParameter( param );
-        }
-        
-        if( NULL != valueWeights )
-        {
-            std::vector<int> weights;
-            weights.reserve( valueCount );
-            weights.insert( weights.begin(), valueWeights, valueWeights + valueCount );
-            param->SetWeights(move(weights));
         }
     }
     catch( ... )
