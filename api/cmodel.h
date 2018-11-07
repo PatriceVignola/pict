@@ -27,7 +27,7 @@ public:
             _currentNameIndex( 0 ) {}
 
     wstrings& GetAllNames()       { return( _names ); }
-    std::wstring GetPrimaryName() { return( _names[ 0 ] ); }
+    std::wstring GetPrimaryName() const { return( _names[ 0 ] ); }
 
     // type of the value and any other attribute is currently decided based on the primary name
     wstrings GetNamesForComparisons();

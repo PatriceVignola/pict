@@ -27,10 +27,11 @@ extern "C" {
 // Types
 //
 
-typedef void *        PICT_HANDLE;
-typedef size_t        PICT_VALUE;
-typedef PICT_VALUE *  PICT_RESULT_ROW;
-typedef unsigned int  PICT_RET_CODE;
+typedef void *            PICT_HANDLE;
+typedef size_t            PICT_VALUE;
+typedef PICT_VALUE *      PICT_RESULT_ROW;
+typedef const wchar_t *   PICT_PARAM_NAME;
+typedef unsigned int      PICT_RET_CODE;
 
 typedef struct _PICT_EXCLUSION_ITEM
 {
@@ -272,6 +273,96 @@ PictGetNextResultRow
 
 // ////////////////////////////////////////////////////////////////////////////
 //
+// Fetches the name of a parameter for a given model and index.
+//
+// Parameters:
+//   model      Valid handle to a model allocated by CreateModel or LoadModel
+//   paramIndex The index of the parameter in the model
+//
+// Returns:
+//              The name of the parameter
+//
+// ////////////////////////////////////////////////////////////////////////////
+
+PICT_PARAM_NAME
+API_SPEC
+PictGetParamName
+    (
+    IN const PICT_HANDLE     model,
+    IN unsigned int          paramIndex
+    );
+
+// ////////////////////////////////////////////////////////////////////////////
+//
+// Fetches the integer value of a parameter
+//
+// Parameters:
+//   model      Valid handle to a model allocated by CreateModel or LoadModel
+//   paramIndex The index of the parameter in the model
+//   valueIndex The index of the value in the parameter
+//
+// Returns:
+//              The integer value
+//
+// ////////////////////////////////////////////////////////////////////////////
+
+int
+API_SPEC
+PictGetIntValue
+    (
+    IN const PICT_HANDLE     model,
+    IN unsigned int          paramIndex,
+    IN unsigned int          valueIndex
+    );
+
+// ////////////////////////////////////////////////////////////////////////////
+//
+// Fetches the float value of a parameter
+//
+// Parameters:
+//   model      Valid handle to a model allocated by CreateModel or LoadModel
+//   paramIndex The index of the parameter in the model
+//   valueIndex The index of the value in the parameter
+//
+// Returns:
+//              The integer value
+//
+// ////////////////////////////////////////////////////////////////////////////
+
+float
+API_SPEC
+PictGetFloatValue
+    (
+    IN const PICT_HANDLE     model,
+    IN unsigned int          paramIndex,
+    IN unsigned int          valueIndex
+    );
+
+// ////////////////////////////////////////////////////////////////////////////
+//
+// Fetches the string value of a parameter
+//
+// Parameters:
+//   model      Valid handle to a model allocated by CreateModel or LoadModel
+//   paramIndex The index of the parameter in the model
+//   valueIndex The index of the value in the parameter
+//
+// Returns:
+//              The integer value
+//
+// ////////////////////////////////////////////////////////////////////////////
+
+const wchar_t*
+API_SPEC
+PictGetStringValue
+    (
+    IN const PICT_HANDLE     model,
+    IN unsigned int          paramIndex,
+    IN unsigned int          valueIndex
+    );
+
+// ////////////////////////////////////////////////////////////////////////////
+//
 // Deletes a task
 //
 // Parameters:
@@ -306,7 +397,8 @@ PICT_HANDLE
 API_SPEC
 PictLoadModel
 (
-    IN const wchar_t* path
+    IN const wchar_t* path,
+    IN OPT unsigned int order = UINT_MAX
 );
 
 // ////////////////////////////////////////////////////////////////////////////
@@ -395,7 +487,7 @@ PictAttachChildModel
 // Deallocates a model, all its parameters *AND* all submodels attached to it
 //
 // Parameters:
-//   model  Valid handle to a model allocated by CreateModel
+//   model  Valid handle to a model allocated by CreateModel or LoadModel
 // 
 // Returns:
 //   Nothing

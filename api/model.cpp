@@ -1442,6 +1442,14 @@ void Model::fixRowSeeds()
     for_each( m_rowSeeds.begin(), m_rowSeeds.end(), printRowSeed );
 }
 
+void Model::transferExclusionsToTask(Task* task)
+{
+    // TODO:pavignol Add a move parameter overload for AddExclusion
+    for( auto & exclusion : m_exclusions ) task->AddExclusion( exclusion );
+
+    m_exclusions.clear();
+}
+
 //
 //
 //

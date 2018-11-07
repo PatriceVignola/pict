@@ -19,10 +19,21 @@ void generate( Model* model );
 //
 PICT_HANDLE
 API_SPEC
-PictCreateTask()
+PictGetTask()
 {
     Task* taskObj = new Task();
     return( static_cast<PICT_HANDLE>( taskObj ) );
+};
+
+//
+//
+//
+PICT_HANDLE
+API_SPEC
+PictCreateTask()
+{
+    Task* taskObj = new Task();
+    return(static_cast<PICT_HANDLE>(taskObj));
 };
 
 //
@@ -222,6 +233,85 @@ PictGetNextResultRow
 //
 //
 //
+PICT_PARAM_NAME
+API_SPEC
+PictGetParamName
+(
+    IN const PICT_HANDLE     model,
+    IN unsigned int          paramIndex
+)
+{
+    Model* modelObj = static_cast<Model*>(NO_CONST_HANDLE(model));
+
+    assert(paramIndex >= 0 && paramIndex < modelObj->GetParameters().size());
+
+    Parameter* param = modelObj->GetParameters()[paramIndex];
+    return &param->GetName()[0];
+}
+
+//
+//
+//
+const wchar_t*
+API_SPEC
+PictGetStringValue
+    (
+    IN const PICT_HANDLE     model,
+    IN unsigned int          paramIndex,
+    IN unsigned int          valueIndex
+    )
+{
+    Model* modelObj = static_cast<Model*>(NO_CONST_HANDLE(model));
+
+    assert(paramIndex >= 0 && paramIndex < modelObj->GetParameters().size());
+
+    Parameter* param = modelObj->GetParameters()[paramIndex];
+    return &param->GetValueName(valueIndex)[0];
+}
+
+//
+//
+//
+int
+API_SPEC
+PictGetIntValue
+(
+    IN const PICT_HANDLE     model,
+    IN unsigned int          paramIndex,
+    IN unsigned int          valueIndex
+)
+{
+    Model* modelObj = static_cast<Model*>(NO_CONST_HANDLE(model));
+
+    assert(paramIndex >= 0 && paramIndex < modelObj->GetParameters().size());
+
+    Parameter* param = modelObj->GetParameters()[paramIndex];
+    return std::stoi(param->GetValueName(valueIndex));
+}
+
+//
+//
+//
+float
+API_SPEC
+PictGetFloatValue
+(
+    IN const PICT_HANDLE     model,
+    IN unsigned int          paramIndex,
+    IN unsigned int          valueIndex
+)
+{
+    Model* modelObj = static_cast<Model*>(NO_CONST_HANDLE(model));
+
+    assert(paramIndex >= 0 && paramIndex < modelObj->GetParameters().size());
+
+    Parameter* param = modelObj->GetParameters()[paramIndex];
+    return std::stof(param->GetValueName(valueIndex));
+}
+
+//
+//
+//
 void
 API_SPEC
 PictDeleteTask
@@ -239,21 +329,25 @@ PictDeleteTask
 PICT_HANDLE
 API_SPEC
 PictLoadModel
-(
-    IN const wchar_t* path
-)
+    (
+    IN const wchar_t* path,
+    IN OPT unsigned int order
+    )
 {
+    assert(order > 1);
+
     CModelData cModelData;
     cModelData.ReadModel(std::wstring(path));
-    unsigned int order = 2;
+
+    unsigned int realOrder = min(order, static_cast<unsigned int>(cModelData.Parameters.size()));
 
     // TODO: Add a seed parameter
     Model* modelObj = new Model(L"", MixedOrder, 0, PICT_DEFAULT_RANDOM_SEED);
 
     for (const CModelParameter& cParam : cModelData.Parameters)
     {
-        Parameter* param = new Parameter(order,
-            static_cast<int>(modelObj->GetParameters().size() + 1),
+        Parameter* param = new Parameter(realOrder,
+            static_cast<int>(modelObj->GetParameters().size()),
             static_cast<int>(cParam.Values.size()),
             cParam.Name,
             false);
@@ -261,12 +355,17 @@ PictLoadModel
         vector<int> weights;
         weights.reserve(cParam.Values.size());
 
+        vector<wstring> valueNames;
+        valueNames.reserve(cParam.Values.size());
+
         for (const CModelValue& value : cParam.Values)
         {
             weights.push_back(value.GetWeight());
+            valueNames.push_back(value.GetPrimaryName());
         }
 
         param->SetWeights(move(weights));
+        param->SetValueNames(move(valueNames));
         modelObj->AddParameter(param);
     }
 
@@ -275,12 +374,9 @@ PictLoadModel
     std::set<Exclusion> exclusions;
     interpreter.ConvertToExclusions(exclusions);
 
-    Task* taskObj = new Task();
-    taskObj->SetRootModel(modelObj);
-
     for (const Exclusion& exclusion : exclusions)
     {
-        taskObj->AddExclusion(exclusion);
+        modelObj->AddExclusion(exclusion);
     }
 
     return(static_cast<PICT_HANDLE>(modelObj));
@@ -410,8 +506,6 @@ PictDeleteModel
     {
         delete( param );
     }
-
-    delete( modelObj->GetTask() );
 
     // and this model, Model::~Model will clean up all submodels too
     delete( modelObj );

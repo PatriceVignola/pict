@@ -385,6 +385,7 @@ public:
 
     void SetOrder( int Order ) { m_order = Order; }
     void SetWeights( std::vector<int> Weights );
+    void SetValueNames(std::vector<std::wstring> valueNames);
 
     const std::wstring& GetName() const { return m_name; }
     ExclIterCollection& GetExclusions() { return m_exclusions; }
@@ -398,6 +399,13 @@ public:
         else
             return 1;
     }
+
+    const std::wstring& GetValueName(size_t n) const
+    {
+        assert(n >= 0 && n < static_cast<int>(m_valueNames.size()));
+        return m_valueNames[n];
+    }
+
     int GetSequence()        const { return m_sequence; }
     int GetValueCount()      const { return static_cast<int>( m_valueCount ); }
     int GetTempResultCount() const { return static_cast<int>( m_result.size() ); }
@@ -471,7 +479,8 @@ private:
     ParamResult::iterator m_resultIter;
     ParamResult           m_result;
 
-    std::vector<int>      m_valueWeights;
+    std::vector<int>          m_valueWeights;
+    std::vector<std::wstring> m_valueNames;
 
     Task*  m_task;
 
@@ -520,7 +529,7 @@ public:
     void Generate();             // entry point of the generation
     GenerationType GetGenerationType() { return( m_generationType ); }
 
-    bool AddExclusion( Exclusion& e )
+    bool AddExclusion( const Exclusion& e )
     {
         std::pair<ExclusionCollection::iterator, bool> ret = m_exclusions.insert( e );
         return( ret.second );
@@ -561,6 +570,9 @@ public:
         m_task = task;
         for( auto & param : m_parameters )   param->WireTask( task );
         for( auto & submodel : m_submodels ) submodel->WireTask( task );
+        
+        // The task should own the exclusions of all its submodels
+        transferExclusionsToTask( task );
     }
 
     Task* GetTask() { return( m_task ); }
@@ -650,6 +662,9 @@ private:
     void deriveSubmodelExclusions();
     bool rowViolatesExclusion( ResultRow& row );
     bool rowViolatesExclusion( Exclusion& row );
+
+    // TODO:pavignol Change the way it's done
+    void transferExclusionsToTask( Task* task );
 
     void markUndefinedValuesInResultParams();
 

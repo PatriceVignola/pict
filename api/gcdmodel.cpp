@@ -14,7 +14,7 @@ namespace pict_gcd
 bool CGcdData::CheckEntireParameterExcluded()
 {
     // key is a parameter, parameter has a set of values
-    map< Parameter*, set< int > > paramMap;
+    map< Parameter*, set< int > > ParamCollection;
     set< int > emptySet;
 
     // walk through all exclusions, pick one-element ones, and add them to the map
@@ -23,7 +23,7 @@ bool CGcdData::CheckEntireParameterExcluded()
         if( 1 == exclusion.size() )
         {
             ExclusionTerm& term = const_cast<ExclusionTerm&> ( *( exclusion.begin() ) );
-            auto result = paramMap.insert( make_pair( term.first, emptySet ) );
+            auto result = ParamCollection.insert( make_pair( term.first, emptySet ) );
 
             set< int >& values = ( result.first )->second;
             values.insert( term.second );
@@ -31,7 +31,7 @@ bool CGcdData::CheckEntireParameterExcluded()
     }
 
     // if any of the params in the map contains all elements then the entire parameter is excluded
-    for( auto & parameter : paramMap )
+    for( auto & parameter : ParamCollection )
     {
         if( ( parameter.first )->GetValueCount() == static_cast<int> ( parameter.second.size() ))
         {
@@ -135,7 +135,7 @@ bool CGcdData::FixParamOrder( IN Model* submodel )
 //
 //
 //
-typedef map< CModelParameter*, Parameter* > CParamMap;
+typedef map< CModelParameter*, Parameter* > CParamCollection;
 
 //
 // the main proc translating the model gathered from the UI to one used by the engine
@@ -157,7 +157,7 @@ ErrorCode CGcdData::TranslateToGCD()
     //  all parameters not assigned to any submodel will be linked to the root
 
     // create a map of all parameter iterators, this will guide the rest of the translation
-    CParamMap paramMap;
+    CParamCollection ParamCollection;
 
     for( size_t index = 0; index < _modelData.Parameters.size(); ++index )
     {
@@ -180,7 +180,7 @@ ErrorCode CGcdData::TranslateToGCD()
         param.GcdPointer = gcdParam;
         
         // store the pointer in a safe place for later
-        paramMap.insert( make_pair( &param, gcdParam ) );
+        ParamCollection.insert( make_pair( &param, gcdParam ) );
     }
 
     // we will store all params assigned to submodels here
@@ -197,8 +197,8 @@ ErrorCode CGcdData::TranslateToGCD()
             // idx_param is an index of a parameter in ModelData.Parameters collection
             // to find a submodel in a guiding map let's locate that parameter and get an iterator
             vector< CModelParameter >::iterator i_param = _modelData.Parameters.begin() + idx_param;
-            CParamMap::iterator found = paramMap.find( &(*i_param) );
-            assert( found != paramMap.end() );
+            CParamCollection::iterator found = ParamCollection.find( &(*i_param) );
+            assert( found != ParamCollection.end() );
 
             // insert
             gcdModel->AddParameter( found->second );
@@ -219,11 +219,11 @@ ErrorCode CGcdData::TranslateToGCD()
     // 1. if any submodels were explicitly defined by a user we should create a submodel for each
     //    outstanding parameter; all such submodels should be uplinked to the root
     // 2. if no submodels were defined we just put params directly to the root
-    if( usedInSubmodels.size() != paramMap.size() )
+    if( usedInSubmodels.size() != ParamCollection.size() )
     {
         if( _modelData.Submodels.size() > 0 )
         {
-            for( auto & iparam : paramMap )
+            for( auto & iparam : ParamCollection )
             {
                 if( usedInSubmodels.find( iparam.second ) != usedInSubmodels.end() )
                 {
@@ -239,7 +239,7 @@ ErrorCode CGcdData::TranslateToGCD()
         }
         else
         {
-            for( auto & iparam : paramMap )
+            for( auto & iparam : ParamCollection )
             {
                 rootModel->AddParameter( iparam.second );
             }

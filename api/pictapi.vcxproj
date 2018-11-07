@@ -59,25 +59,27 @@
     <LinkIncremental>true</LinkIncremental>
     <TargetName>pict</TargetName>
     <TargetExt>.lib</TargetExt>
-    <IntDir>$(Configuration)\</IntDir>
-    <OutDir>$(SolutionDir)$(Configuration)\api\</OutDir>
+    <IntDir>$(Platform)\$(Configuration)\</IntDir>
+    <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\api\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
     <TargetName>pict</TargetName>
     <TargetExt>.lib</TargetExt>
+    <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\api\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
     <TargetName>pict</TargetName>
     <TargetExt>.lib</TargetExt>
-    <IntDir>$(Configuration)\</IntDir>
-    <OutDir>$(SolutionDir)$(Configuration)\api\</OutDir>
+    <IntDir>$(Platform)\$(Configuration)\</IntDir>
+    <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\api\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
     <TargetName>pict</TargetName>
     <TargetExt>.lib</TargetExt>
+    <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\api\</OutDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>

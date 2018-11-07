@@ -150,6 +150,15 @@ void Parameter::SetWeights( vector<int> weights )
 }
 
 //
+//
+//
+void Parameter::SetValueNames( vector<wstring> valueNames )
+{
+    assert( valueNames.size() == m_valueCount );
+    m_valueNames = valueNames;
+}
+
+//
 // Return the parameter collection of the pseudoparameter's underlying Model
 //
 ParamCollection* PseudoParameter::GetComponents()
