@@ -19,21 +19,10 @@ void generate( Model* model );
 //
 PICT_HANDLE
 API_SPEC
-PictGetTask()
-{
-    Task* taskObj = new Task();
-    return( static_cast<PICT_HANDLE>( taskObj ) );
-};
-
-//
-//
-//
-PICT_HANDLE
-API_SPEC
 PictCreateTask()
 {
     Task* taskObj = new Task();
-    return(static_cast<PICT_HANDLE>(taskObj));
+    return( static_cast<PICT_HANDLE>( taskObj ) );
 };
 
 //
@@ -254,7 +243,7 @@ PictGetParamName
 //
 const wchar_t*
 API_SPEC
-PictGetStringValue
+PictGetValue
     (
     IN const PICT_HANDLE     model,
     IN unsigned int          paramIndex,
@@ -267,46 +256,6 @@ PictGetStringValue
 
     Parameter* param = modelObj->GetParameters()[paramIndex];
     return &param->GetValueName(valueIndex)[0];
-}
-
-//
-//
-//
-int
-API_SPEC
-PictGetIntValue
-(
-    IN const PICT_HANDLE     model,
-    IN unsigned int          paramIndex,
-    IN unsigned int          valueIndex
-)
-{
-    Model* modelObj = static_cast<Model*>(NO_CONST_HANDLE(model));
-
-    assert(paramIndex >= 0 && paramIndex < modelObj->GetParameters().size());
-
-    Parameter* param = modelObj->GetParameters()[paramIndex];
-    return std::stoi(param->GetValueName(valueIndex));
-}
-
-//
-//
-//
-float
-API_SPEC
-PictGetFloatValue
-(
-    IN const PICT_HANDLE     model,
-    IN unsigned int          paramIndex,
-    IN unsigned int          valueIndex
-)
-{
-    Model* modelObj = static_cast<Model*>(NO_CONST_HANDLE(model));
-
-    assert(paramIndex >= 0 && paramIndex < modelObj->GetParameters().size());
-
-    Parameter* param = modelObj->GetParameters()[paramIndex];
-    return std::stof(param->GetValueName(valueIndex));
 }
 
 //

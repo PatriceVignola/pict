@@ -294,7 +294,7 @@ extern "C" {
 
     // ////////////////////////////////////////////////////////////////////////////
     //
-    // Fetches the integer value of a parameter
+    // Fetches the value of a parameter
     //
     // Parameters:
     //   model      Valid handle to a model allocated by CreateModel or LoadModel
@@ -302,59 +302,13 @@ extern "C" {
     //   valueIndex The index of the value in the parameter
     //
     // Returns:
-    //              The integer value
-    //
-    // ////////////////////////////////////////////////////////////////////////////
-
-    int
-        API_SPEC
-        PictGetIntValue
-        (
-            IN const PICT_HANDLE     model,
-            IN unsigned int          paramIndex,
-            IN unsigned int          valueIndex
-        );
-
-    // ////////////////////////////////////////////////////////////////////////////
-    //
-    // Fetches the float value of a parameter
-    //
-    // Parameters:
-    //   model      Valid handle to a model allocated by CreateModel or LoadModel
-    //   paramIndex The index of the parameter in the model
-    //   valueIndex The index of the value in the parameter
-    //
-    // Returns:
-    //              The integer value
-    //
-    // ////////////////////////////////////////////////////////////////////////////
-
-    float
-        API_SPEC
-        PictGetFloatValue
-        (
-            IN const PICT_HANDLE     model,
-            IN unsigned int          paramIndex,
-            IN unsigned int          valueIndex
-        );
-
-    // ////////////////////////////////////////////////////////////////////////////
-    //
-    // Fetches the string value of a parameter
-    //
-    // Parameters:
-    //   model      Valid handle to a model allocated by CreateModel or LoadModel
-    //   paramIndex The index of the parameter in the model
-    //   valueIndex The index of the value in the parameter
-    //
-    // Returns:
-    //              The integer value
+    //              The value of the parameter
     //
     // ////////////////////////////////////////////////////////////////////////////
 
     const wchar_t*
         API_SPEC
-        PictGetStringValue
+        PictGetValue
         (
             IN const PICT_HANDLE     model,
             IN unsigned int          paramIndex,

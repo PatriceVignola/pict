@@ -40,9 +40,10 @@
 
   <PropertyGroup>
     <TargetName>pict</TargetName>
-    <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\cli</OutDir>
+    <OutDir>$(SolutionDir)$(Configuration)\cli\</OutDir>
     <DropDir>$(SolutionDir)bin\</DropDir>
   </PropertyGroup>
+
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
